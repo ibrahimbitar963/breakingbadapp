@@ -1,5 +1,5 @@
 
 
-final baseURL='https://breakingbadapi.com/';
-
+final baseURL='https://breakingbadapi.com/api/';
 const  charactersScreen ='/';
+const charactersDetailsScreen = 'charachters_details';
