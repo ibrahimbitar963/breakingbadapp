@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:breakingbad/constans/strings.dart';
 import 'package:dio/dio.dart';
 import 'package:breakingbad/data/model/Character.dart';
