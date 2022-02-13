@@ -22,4 +22,5 @@ Character.fromJson(Map <String, dynamic> json) {
 
 }
 
+
  }
