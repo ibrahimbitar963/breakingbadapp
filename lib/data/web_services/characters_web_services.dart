@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:breakingbad/constans/strings.dart';
 import 'package:dio/dio.dart';
-import 'package:breakingbad/data/model/Character.dart';
+
 class CharactersWebServices {
   late Dio dio;
 
@@ -14,16 +13,14 @@ class CharactersWebServices {
     );
     dio = Dio(options);
   }
-  Future<List<dynamic>> getAllCharacters()async{
-    try{
+  Future<List<dynamic>> getAllCharacters() async {
+    try {
       Response response = await dio.get('characters');
-    print(response.data.toString());
-    return response.data;}
-
-        catch (e){
+      print(response.data.toString());
+      return response.data;
+    } catch (e) {
       print(e.toString());
       return [];
-        }
+    }
   }
-
 }
