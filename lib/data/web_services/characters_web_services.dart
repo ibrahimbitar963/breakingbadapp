@@ -25,4 +25,5 @@ class CharactersWebServices {
       return [];
         }
   }
+
 }
