@@ -16,34 +16,36 @@ class _CharactersScreenState extends State<CharactersScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    allCharacters =
-        BlocProvider.of<CharachtersCubit>(context).getAllCharacters();
+
+    BlocProvider.of<CharachtersCubit>(context).getAllCharacter();
   }
 
   Widget buildBlocWidget() {
     return BlocBuilder<CharachtersCubit, CharachtersState>(
       builder: (context, state) {
-        if (state is CharactersLoaded) {
-          allCharacters = (state).characters;
+        if (state is CharachtersLoaded) {
+          print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+
+
+          allCharacters = (state).character;
           return buildLoadedListWidgets();
         } else {
-        return  showLoadingIndicator();
+          print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
+          return showLoadingIndicator();
         }
       },
     );
   }
 
-  Widget showLoadingIndicator(){
+  Widget showLoadingIndicator() {
     return Center(
-      child:Container(
+      child: Container(
         child: CircularProgressIndicator(
           color: MyColors.myYellow,
         ),
-      )
-      ,
+      ),
     );
   }
-
 
   Widget buildLoadedListWidgets() {
     return SingleChildScrollView(
@@ -60,15 +62,20 @@ class _CharactersScreenState extends State<CharactersScreen> {
 
   Widget buildCharactersList() {
     return GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 2 / 3,
-          crossAxisSpacing: 1,
-          mainAxisSpacing: 1,
-        ),
-        itemBuilder: (context,index){
-          return CharactersItem();
-        });
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        childAspectRatio: 2 / 3,
+        crossAxisSpacing: 1,
+        mainAxisSpacing: 1,
+      ),
+      itemBuilder: (context, index) {
+        return CharactersItem(character: allCharacters[index],);
+      },
+      shrinkWrap: true,
+      physics: const ClampingScrollPhysics(),
+      padding: EdgeInsets.zero,
+      itemCount: allCharacters.length,
+    );
   }
 
   @override

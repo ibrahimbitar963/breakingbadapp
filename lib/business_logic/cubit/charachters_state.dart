@@ -11,7 +11,4 @@ class CharachtersLoaded extends CharachtersState {
  CharachtersLoaded(this.character);
 }
 
-class CharactersLoaded extends CharachtersState {
-  late final List<Character> characters;
-  CharactersLoaded(this.characters);
-}
+
