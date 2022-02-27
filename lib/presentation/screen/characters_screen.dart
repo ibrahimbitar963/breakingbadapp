@@ -12,11 +12,58 @@ class CharactersScreen extends StatefulWidget {
 
 class _CharactersScreenState extends State<CharactersScreen> {
   late List<Character> allCharacters;
+  late List<Character> searchedCharacterList;
+  bool _isSearching = false;
+  final _searchTextController = TextEditingController();
+
+  Widget _buildSearchField() {
+    return TextField(
+      controller: _searchTextController,
+      cursorColor: MyColors.myGrey,
+      decoration: InputDecoration(
+        hintStyle: TextStyle(fontSize: 18, color: MyColors.myGrey),
+        hintText: 'Find a character',
+        border: InputBorder.none,
+      ),
+      style: TextStyle(fontSize: 18, color: MyColors.myGrey),
+      onChanged: (searchedCharacter) {
+        addSearchedItemToCharacterList(searchedCharacter);
+      },
+    );
+  }
+
+  void addSearchedItemToCharacterList(String searchedCharacter) {
+    searchedCharacterList = allCharacters
+        .where((character) =>
+            character.nickName.toLowerCase().startsWith(searchedCharacter))
+        .toList();
+    setState(() {});
+  }
+
+  List<Widget> _buildAppBarActions() {
+    if (_isSearching) {
+      return [
+        IconButton(
+          onPressed: () {
+            //TODO:sad
+          },
+          icon: Icon(Icons.clear),
+          color: MyColors.myGrey,
+        ),
+      ];
+    } else {
+      return [
+        IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.search),
+        ),
+      ];
+    }
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-
     BlocProvider.of<CharachtersCubit>(context).getAllCharacter();
   }
 
@@ -24,13 +71,9 @@ class _CharactersScreenState extends State<CharactersScreen> {
     return BlocBuilder<CharachtersCubit, CharachtersState>(
       builder: (context, state) {
         if (state is CharachtersLoaded) {
-          print('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-
-
           allCharacters = (state).character;
           return buildLoadedListWidgets();
         } else {
-          print('sssssssssssssssssssssssssssssssssssssssssssssssssssssssss');
           return showLoadingIndicator();
         }
       },
@@ -69,7 +112,9 @@ class _CharactersScreenState extends State<CharactersScreen> {
         mainAxisSpacing: 1,
       ),
       itemBuilder: (context, index) {
-        return CharactersItem(character: allCharacters[index],);
+        return CharactersItem(
+          character: allCharacters[index],
+        );
       },
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),

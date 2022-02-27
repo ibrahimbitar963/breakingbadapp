@@ -33,7 +33,7 @@ class CharactersItem extends StatelessWidget {
           color: Colors.black54,
           alignment: Alignment.bottomCenter,
           child: Text(
-            '${character.actorName}',
+            '${character.nickName}',
             style: TextStyle(
               height: 1.3,
               color: MyColors.myWhite,
