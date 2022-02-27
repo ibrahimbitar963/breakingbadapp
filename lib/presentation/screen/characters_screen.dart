@@ -45,7 +45,8 @@ class _CharactersScreenState extends State<CharactersScreen> {
       return [
         IconButton(
           onPressed: () {
-            //TODO:sad
+            _stopSearching();
+            Navigator.pop(context);
           },
           icon: Icon(Icons.clear),
           color: MyColors.myGrey,
@@ -54,11 +55,29 @@ class _CharactersScreenState extends State<CharactersScreen> {
     } else {
       return [
         IconButton(
-          onPressed: () {},
-          icon: Icon(Icons.search),
+          onPressed: () {
+            _startSearch();
+          },
+          icon: Icon(Icons.search,
+          color: MyColors.myGrey,),
         ),
       ];
     }
+  }
+  void _startSearch(){
+    ModalRoute.of(context)!.addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching)
+    );
+
+    setState(() {
+      _isSearching=true;
+    });
+  }
+
+  void _stopSearching(){
+    _searchTextController.clear();
+    setState(() {
+      _isSearching=false;
+    });
   }
 
   @override
@@ -113,25 +132,30 @@ class _CharactersScreenState extends State<CharactersScreen> {
       ),
       itemBuilder: (context, index) {
         return CharactersItem(
-          character: allCharacters[index],
+          character: _searchTextController.text.isEmpty?allCharacters[index]:searchedCharacterList[index],
         );
       },
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
       padding: EdgeInsets.zero,
-      itemCount: allCharacters.length,
+      itemCount: _searchTextController.text.isEmpty? allCharacters.length: searchedCharacterList.length,
     );
   }
 
+  Widget _buildAppBarTitle(){
+    return Text(
+      'Characters',
+      style: TextStyle(color: MyColors.myGrey),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MyColors.myYellow,
-        title: Text(
-          'Characters',
-          style: TextStyle(color: MyColors.myGrey),
-        ),
+        title: _isSearching? _buildSearchField():_buildAppBarTitle(),
+        actions: _buildAppBarActions(),
+        leading: _isSearching?BackButton(color: MyColors.myGrey,):Container(),
       ),
       body: buildBlocWidget(),
     );
