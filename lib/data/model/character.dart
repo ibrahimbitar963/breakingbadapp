@@ -6,12 +6,14 @@ class Character {
   late String StatusIfDeadOrAlive;
   late List<dynamic> appearance;
   late String actorName;
+  late String category;
   late List<dynamic> better_call_saul_appearance;
 
   Character.fromJson(Map<String, dynamic> json) {
     char_Id = json['char_id'];
     nickName = json['name'];
     image = json['img'];
+    category=json['category'];
     jobs = json['occupation'];
     StatusIfDeadOrAlive = json['status'];
     appearance = json['appearance'];

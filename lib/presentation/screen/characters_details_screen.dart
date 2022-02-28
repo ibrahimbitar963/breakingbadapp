@@ -45,11 +45,9 @@ class CharactersDetailsScreen extends StatelessWidget {
               )),
           TextSpan(
             text: value,
-
             style: TextStyle(
               color: MyColors.myWhite,
               fontSize: 16,
-
             ),
           ),
         ],
@@ -57,13 +55,12 @@ class CharactersDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget buildDivider({required double endIndent}){
+  Widget buildDivider({required double endIndent}) {
     return Divider(
-      endIndent:endIndent ,
+      endIndent: endIndent,
       color: MyColors.myYellow,
       height: 30,
       thickness: 4,
-
     );
   }
 
@@ -84,11 +81,17 @@ class CharactersDetailsScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      characterInfo(title:'Job :' ,value:character.jobs.join('/') ),
+                      characterInfo(
+                          title: 'Job :', value: character.jobs.join('/')),
                       buildDivider(endIndent: 285),
-                      SizedBox(height: 15),
-                      buildDivider(endIndent: 500),
+                      characterInfo(title: 'Appeared In: ', value: character.category),
+                      buildDivider(endIndent: 215),
+                      characterInfo(title: 'Seasons: ', value: character.appearance.join('/',),),
+                      buildDivider(endIndent:240 ),
+                      characterInfo(title: 'Status: ', value: character.StatusIfDeadOrAlive),
+                      buildDivider(endIndent: 260),
 
+                   
                     ],
                   ),
                 ),
