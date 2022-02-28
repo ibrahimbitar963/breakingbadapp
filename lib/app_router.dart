@@ -1,11 +1,12 @@
 import 'package:breakingbad/business_logic/cubit/charachters_cubit.dart';
 import 'package:breakingbad/constans/strings.dart';
 import 'package:breakingbad/data/repository/characters_repo.dart';
-import 'package:breakingbad/presentation/screen/characters_details.dart';
+import 'package:breakingbad/presentation/screen/characters_details_screen.dart';
 import 'package:breakingbad/presentation/screen/characters_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'data/model/character.dart';
 import 'data/web_services/characters_web_services.dart';
 
 class AppRouter {
@@ -25,7 +26,8 @@ class AppRouter {
               child: CharactersScreen(),
             ));
       case charactersDetailsScreen:
-        return MaterialPageRoute(builder: (_) => CharactersDetailsScreen());
+        final character = settings.arguments as Character;
+        return MaterialPageRoute(builder: (_) => CharactersDetailsScreen(character: character,),);
     }
   }
 }

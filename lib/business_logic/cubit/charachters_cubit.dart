@@ -5,15 +5,15 @@ import 'package:meta/meta.dart';
 
 part 'charachters_state.dart';
 
-class CharachtersCubit extends Cubit<CharachtersState> {
-  final CharacterRepo characterRepo;
-   List<Character> characters= [];
-  CharachtersCubit(this.characterRepo) : super(CharachtersInitial());
-  List<Character> getAllCharacter(){
-    characterRepo.getAllCharacters().then((characters) {
-      emit(CharachtersLoaded(characters));
-            this.characters = characters;
-    });
-    return characters;
-  }
-}
+      class CharachtersCubit extends Cubit<CharachtersState> {
+        final CharacterRepo characterRepo;
+         List<Character> characters= [];
+        CharachtersCubit(this.characterRepo) : super(CharachtersInitial());
+        List<Character> getAllCharacter(){
+          characterRepo.getAllCharacters().then((characters) {
+            emit(CharachtersLoaded(characters));
+                  this.characters = characters;
+          });
+          return characters;
+        }
+      }

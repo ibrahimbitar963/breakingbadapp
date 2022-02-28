@@ -15,7 +15,7 @@ class Character {
     jobs = json['occupation'];
     StatusIfDeadOrAlive = json['status'];
     appearance = json['appearance'];
-    actorName = json['portrayed'];
+    actorName = json['nickname'];
     better_call_saul_appearance = json['better_call_saul_appearance'];
   }
 }
