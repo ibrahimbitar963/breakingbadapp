@@ -84,16 +84,34 @@ class CharactersDetailsScreen extends StatelessWidget {
                       characterInfo(
                           title: 'Job :', value: character.jobs.join('/')),
                       buildDivider(endIndent: 285),
-                      characterInfo(title: 'Appeared In: ', value: character.category),
+                      characterInfo(
+                          title: 'Appeared In: ', value: character.category),
                       buildDivider(endIndent: 215),
-                      characterInfo(title: 'Seasons: ', value: character.appearance.join('/',),),
-                      buildDivider(endIndent:240 ),
-                      characterInfo(title: 'Status: ', value: character.StatusIfDeadOrAlive),
+                      characterInfo(
+                        title: 'Seasons: ',
+                        value: character.appearance.join(
+                          '/',
+                        ),
+                      ),
+                      buildDivider(endIndent: 240),
+                      characterInfo(
+                          title: 'Status: ',
+                          value: character.StatusIfDeadOrAlive),
                       buildDivider(endIndent: 260),
-
-                   
+                      character.better_call_saul_appearance.isEmpty
+                          ? Container()
+                          : characterInfo(
+                              title: 'better call saul appearance: ',
+                              value: character.better_call_saul_appearance
+                                  .join('/')),
+                      character.better_call_saul_appearance.isEmpty
+                          ? Container()
+                          : buildDivider(endIndent: 92),
                     ],
                   ),
+                ),
+                SizedBox(
+                  height: 300,
                 ),
               ],
             ),
