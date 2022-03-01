@@ -12,3 +12,9 @@ class CharachtersLoaded extends CharachtersState {
 }
 
 
+class QuoteLoaded extends CharachtersState{
+ late final List <Quote> quote;
+ QuoteLoaded(this.quote);
+
+}
+
