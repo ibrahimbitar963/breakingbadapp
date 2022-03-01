@@ -18,6 +18,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
 
   Widget _buildSearchField() {
     return TextField(
+      autofocus: true,
       controller: _searchTextController,
       cursorColor: MyColors.myGrey,
       decoration: InputDecoration(
