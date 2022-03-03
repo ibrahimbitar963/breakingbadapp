@@ -1,9 +1,9 @@
 import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:breakingbad/business_logic/cubit/charachters_cubit.dart';
 import 'package:breakingbad/constans/mycolors.dart';
 import 'package:breakingbad/data/model/character.dart';
+import 'package:breakingbad/presentation/business_logic/cubit/charachters_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:breakingbad/presentation/screen/characters_screen.dart';
@@ -49,7 +49,8 @@ class CharactersDetailsScreen extends StatelessWidget {
                 color: MyColors.myWhite,
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
-              )),
+              ),
+          ),
           TextSpan(
             text: value,
             style: TextStyle(
@@ -71,14 +72,13 @@ class CharactersDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget checkIfQuotesAreLoaded(CharachtersState state) {
-    if (state is QuoteLoaded) {
-      print('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
-      return displayRandomQuoteOrEmptySpace(state);
-    } else {
-      return showLoadingIndicator() ;
-    }
-  }
+      Widget checkIfQuotesAreLoaded(CharachtersState state) {
+        if (state is QuoteLoaded) {
+                   return displayRandomQuoteOrEmptySpace(state);
+        } else {
+          return showLoadingIndicator() ;
+        }
+      }
   Widget showLoadingIndicator() {
     return Center(
       child: Container(
@@ -93,7 +93,6 @@ class CharactersDetailsScreen extends StatelessWidget {
   Widget displayRandomQuoteOrEmptySpace(state) {
     var quotes = (state).quote;
     if (quotes.length != 0) {
-      print('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy');
       int randomQuoteIndex = Random().nextInt(quotes.length - 1);
       return Center(
         child: DefaultTextStyle(
@@ -168,10 +167,11 @@ class CharactersDetailsScreen extends StatelessWidget {
                       character.better_call_saul_appearance.isEmpty
                           ? Container()
                           : buildDivider(endIndent: 92),
-                      BlocBuilder<CharachtersCubit, CharachtersState>(
-                          builder: (context, state) {
-                            return checkIfQuotesAreLoaded(state);
-                          }),
+                            SizedBox(height: 50,),
+                            BlocBuilder< CharachtersCubit , CharachtersState >(
+                            builder: (context, state) {
+                              return checkIfQuotesAreLoaded(state);
+                            },),
                     ],
                   ),
                 ),
@@ -181,7 +181,6 @@ class CharactersDetailsScreen extends StatelessWidget {
               ],
             ),
           ),
-
         ],
       ),
     );

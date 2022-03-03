@@ -1,9 +1,10 @@
-import 'package:breakingbad/business_logic/cubit/charachters_cubit.dart';
 import 'package:breakingbad/constans/mycolors.dart';
 import 'package:breakingbad/data/model/character.dart';
+import 'package:breakingbad/presentation/business_logic/cubit/charachters_cubit.dart';
 import 'package:breakingbad/presentation/widgets/character_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_offline/flutter_offline.dart';
 
 class CharactersScreen extends StatefulWidget {
   @override
@@ -59,25 +60,28 @@ class _CharactersScreenState extends State<CharactersScreen> {
           onPressed: () {
             _startSearch();
           },
-          icon: Icon(Icons.search,
-          color: MyColors.myGrey,),
+          icon: Icon(
+            Icons.search,
+            color: MyColors.myGrey,
+          ),
         ),
       ];
     }
   }
-  void _startSearch(){
-    ModalRoute.of(context)!.addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching)
-    );
+
+  void _startSearch() {
+    ModalRoute.of(context)!
+        .addLocalHistoryEntry(LocalHistoryEntry(onRemove: _stopSearching));
 
     setState(() {
-      _isSearching=true;
+      _isSearching = true;
     });
   }
 
-  void _stopSearching(){
+  void _stopSearching() {
     _searchTextController.clear();
     setState(() {
-      _isSearching=false;
+      _isSearching = false;
     });
   }
 
@@ -133,32 +137,86 @@ class _CharactersScreenState extends State<CharactersScreen> {
       ),
       itemBuilder: (context, index) {
         return CharactersItem(
-          character: _searchTextController.text.isEmpty?allCharacters[index]:searchedCharacterList[index],
+          character: _searchTextController.text.isEmpty
+              ? allCharacters[index]
+              : searchedCharacterList[index],
         );
       },
       shrinkWrap: true,
       physics: const ClampingScrollPhysics(),
       padding: EdgeInsets.zero,
-      itemCount: _searchTextController.text.isEmpty? allCharacters.length: searchedCharacterList.length,
+      itemCount: _searchTextController.text.isEmpty
+          ? allCharacters.length
+          : searchedCharacterList.length,
     );
   }
 
-  Widget _buildAppBarTitle(){
+  Widget _buildAppBarTitle() {
     return Text(
       'Characters',
       style: TextStyle(color: MyColors.myGrey),
     );
   }
+
+  Widget buildAlertWidget() {
+    return Center(
+
+      child: Container(
+        color: Colors.white70,
+        child:SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text('Please check your internet connection'
+              ,style: TextStyle(
+                  color: MyColors.myYellow,
+                  fontSize: 18,
+                    fontWeight: FontWeight.bold
+
+                ),),
+              SizedBox(height: 20,),
+              Image.asset('assets/images/notify.png',
+
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: MyColors.myYellow,
-        title: _isSearching? _buildSearchField():_buildAppBarTitle(),
-        actions: _buildAppBarActions(),
-        leading: _isSearching?BackButton(color: MyColors.myGrey,):Container(),
-      ),
-      body: buildBlocWidget(),
-    );
+        appBar: AppBar(
+          backgroundColor: MyColors.myYellow,
+          title: _isSearching ? _buildSearchField() : _buildAppBarTitle(),
+          actions: _buildAppBarActions(),
+          leading: _isSearching
+              ? BackButton(
+                  color: MyColors.myGrey,
+                )
+              : Container(),
+        ),
+        body: OfflineBuilder(connectivityBuilder: (
+          BuildContext context,
+          ConnectivityResult connectivity,
+          Widget child,
+        ) {
+          final bool connected = connectivity != ConnectivityResult.none;
+          if (connected) {
+
+            return  buildBlocWidget();
+          } else   {
+
+            return buildAlertWidget();
+          }
+
+        },
+        child: showLoadingIndicator(),
+        ),
+
+        );
   }
 }

@@ -1,8 +1,7 @@
-import 'package:breakingbad/business_logic/cubit/charachters_cubit.dart';
 import 'package:breakingbad/constans/strings.dart';
 import 'package:breakingbad/data/repository/characters_repo.dart';
 import 'package:breakingbad/data/repository/quote_repo.dart';
-import 'package:breakingbad/data/web_services/quote_web_services.dart';
+import 'package:breakingbad/presentation/business_logic/cubit/charachters_cubit.dart';
 import 'package:breakingbad/presentation/screen/characters_details_screen.dart';
 import 'package:breakingbad/presentation/screen/characters_screen.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +27,8 @@ class AppRouter {
             builder: (_) => BlocProvider(
                   create: (context) => charactersCubit,
                   child: CharactersScreen(),
-                ));
+                ),
+        );
       case charactersDetailsScreen:
         final character = settings.arguments as Character;
         return MaterialPageRoute(
